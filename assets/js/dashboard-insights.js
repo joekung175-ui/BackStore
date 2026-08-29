@@ -1,0 +1,13 @@
+import { supabase } from './supabase.js';
+import { money, escapeHtml } from './utils.js';
+if (document.body.dataset.page === 'admin-dashboard' && supabase) {
+  let working = false;
+  const mount = async () => {
+    const root = document.querySelector('#admin-content'); if (!root || root.querySelector('.sales-chart-card') || working) return; working = true;
+    try {
+      const [{ data: paid, error }, { data: waiting, error: waitingError }] = await Promise.all([supabase.from('orders').select('created_at,total_satang').is('deleted_at',null).eq('payment_status','approved'),supabase.from('orders').select('order_number,total_satang').is('deleted_at',null).eq('payment_status','submitted').limit(5)]); if (error || waitingError) throw error || waitingError;
+      const days = Array.from({length:7},(_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);const k=d.toISOString().slice(0,10);return {label:new Intl.DateTimeFormat('th-TH',{weekday:'short'}).format(d),value:paid.filter(o=>o.created_at.slice(0,10)===k).reduce((s,o)=>s+o.total_satang,0)}}); const max=Math.max(...days.map(day=>day.value),1);
+      const panel=document.createElement('section'); panel.className='row g-4 mt-1 sales-chart-card'; panel.innerHTML=`<div class="col-lg-7"><div class="card border-0 dashboard-panel h-100"><div class="card-body"><div class="d-flex justify-content-between"><div><h2 class="h5 mb-1">ยอดขาย 7 วันล่าสุด</h2><small class="text-secondary">เฉพาะยอดที่ชำระแล้ว</small></div><strong>${money(days.reduce((s,d)=>s+d.value,0))}</strong></div><div style="height:150px;display:flex;align-items:end;gap:10px;margin-top:16px">${days.map(day=>`<div style="flex:1;text-align:center;height:100%;display:flex;flex-direction:column;justify-content:end;gap:5px"><span title="${money(day.value)}" style="display:block;min-height:7px;height:${Math.max(7,Math.round(day.value/max*100))}%;border-radius:9px 9px 2px 2px;background:linear-gradient(#7ab38b,#245842)"></span><small>${day.label}</small></div>`).join('')}</div></div></div></div><div class="col-lg-5"><div class="card border-0 dashboard-panel h-100"><div class="card-body"><h2 class="h5">สลิปรอตรวจสอบ <span class="badge text-bg-warning">${waiting.length}</span></h2>${waiting.length?`<ul class="live-alerts">${waiting.map(o=>`<li><i class="bi bi-receipt"></i><span><strong>${escapeHtml(o.order_number)}</strong><small>${money(o.total_satang)} · รอตรวจสอบ</small></span></li>`).join('')}</ul><a href="orders.html" class="btn btn-outline-primary btn-sm mt-2">ไปตรวจสอบ</a>`:'<p class="text-secondary mb-0">ไม่มีสลิปรอตรวจสอบ</p>'}</div></div></div>`; root.append(panel);
+    } catch (_) {} finally { working=false; }
+  }; new MutationObserver(mount).observe(document.documentElement,{childList:true,subtree:true}); mount();
+}

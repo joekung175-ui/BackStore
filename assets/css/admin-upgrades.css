@@ -1,0 +1,121 @@
+/* Shared visual polish for the admin area. */
+body[data-page^="admin-"] .admin-shell {
+  background:
+    radial-gradient(circle at 92% 5%, rgba(164, 201, 162, .34), transparent 25rem),
+    radial-gradient(circle at 40% 100%, rgba(246, 205, 144, .12), transparent 30rem),
+    #f4f7f2;
+}
+
+body[data-page^="admin-"] .admin-header {
+  min-height: 5.6rem;
+  padding: 1.25rem 1.45rem !important;
+  border-radius: 1.15rem !important;
+  background: linear-gradient(120deg, rgba(255,255,255,.94), rgba(250,253,248,.79)) !important;
+  box-shadow: 0 .8rem 2rem rgba(25, 50, 41, .08) !important;
+}
+
+body[data-page^="admin-"] .admin-header h1 { font-size: 1.45rem; }
+body[data-page^="admin-"] .admin-page-caption {
+  position: absolute; left: 1.45rem; bottom: .85rem; margin: 0;
+  color: #718075; font-size: .78rem; font-weight: 600;
+}
+body[data-page^="admin-"] .admin-header .badge {
+  position: relative; z-index: 2; border-radius: 999px; padding: .48rem .75rem;
+}
+
+body[data-page^="admin-"] .admin-nav {
+  padding: 1.25rem !important;
+  background: linear-gradient(170deg, #102e22, #194c37 52%, #123626) !important;
+}
+body[data-page^="admin-"] .admin-nav .sidebar-title {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  align-items: center;
+  min-height: 4.2rem;
+  margin: -.35rem -.35rem 1.2rem !important;
+  padding: .8rem .85rem !important;
+  border: 1px solid rgba(255,255,255,.72);
+  border-left: .28rem solid #f4b860;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #fffdf7 0%, #edf5e8 100%);
+  color: #184532 !important;
+  box-shadow: 0 .6rem 1.3rem rgba(0, 0, 0, .19), inset 0 1px 0 rgba(255,255,255,.85);
+  font-size: 1rem !important;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -.01em;
+  overflow: hidden;
+}
+body[data-page^="admin-"] .admin-nav .sidebar-title::before {
+  content: "✦";
+  display: grid;
+  place-items: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: .62rem;
+  background: linear-gradient(145deg, #2e7457, #164631);
+  color: #f9ce72;
+  box-shadow: .18rem .25rem .55rem rgba(22,70,49,.24);
+  font-size: .85rem;
+}
+body[data-page^="admin-"] .admin-nav .sidebar-title::after {
+  content: "ศูนย์จัดการร้าน";
+  grid-column: 2;
+  margin-top: -.8rem;
+  color: #75927b;
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+body[data-page^="admin-"] .admin-nav a {
+  margin: .28rem 0; padding: .78rem .85rem; border: 1px solid transparent;
+  border-radius: .8rem; color: rgba(239, 248, 238, .78);
+}
+body[data-page^="admin-"] .admin-nav a:hover {
+  border-color: rgba(255,255,255,.12); background: rgba(255,255,255,.1) !important;
+  transform: translateX(3px);
+}
+body[data-page^="admin-"] .admin-nav a.active {
+  border-color: rgba(147,205,159,.28); background: linear-gradient(120deg, #307459, #23553f) !important;
+  box-shadow: .4rem .45rem 1rem rgba(0,0,0,.16);
+}
+body[data-page^="admin-"] .admin-nav a i { width: 1.25rem; text-align: center; }
+
+body[data-page^="admin-"] #admin-content > .card,
+body[data-page^="admin-"] #admin-content .card.border-0 {
+  border: 1px solid rgba(80,119,88,.12) !important; border-radius: 1.1rem !important;
+  box-shadow: 0 .65rem 1.6rem rgba(25,50,41,.06) !important;
+}
+body[data-page^="admin-"] .table { margin-bottom: 0; }
+body[data-page^="admin-"] .table thead th {
+  padding: .85rem .7rem; border-bottom: 0; background: #f2f6ef; color: #587062;
+  font-size: .75rem; letter-spacing: .04em; text-transform: uppercase;
+}
+body[data-page^="admin-"] .table tbody td { padding: .9rem .7rem; border-color: #edf1eb; vertical-align: middle; }
+body[data-page^="admin-"] .table tbody tr { transition: background .2s ease, transform .2s ease; }
+body[data-page^="admin-"] .table tbody tr:hover { background: #fbfdf9; transform: translateX(2px); }
+body[data-page^="admin-"] .btn { border-radius: .72rem; font-weight: 700; }
+body[data-page^="admin-"] .form-control,
+body[data-page^="admin-"] .form-select { background: #fcfdfb; }
+body[data-page^="admin-"] #admin-order-bell {
+  border-radius: 999px; background: #fff; box-shadow: 0 .3rem .8rem rgba(25,50,41,.08);
+}
+
+body[data-page^="admin-"] .analysis-hero {
+  position: relative; overflow: hidden;
+  background: linear-gradient(122deg, #123b2b, #2d7758 63%, #5b9870);
+}
+body[data-page^="admin-"] .analysis-hero::after {
+  content: ""; position: absolute; width: 13rem; height: 13rem; right: -4rem; top: -7rem;
+  border: 1px solid rgba(255,255,255,.25); border-radius: 50%; box-shadow: 0 0 0 2rem rgba(255,255,255,.04);
+}
+body[data-page^="admin-"] .analysis-hero .btn { position: relative; z-index: 1; }
+
+@media (max-width: 991px) {
+  body[data-page^="admin-"] .admin-main { padding: 1rem; }
+  body[data-page^="admin-"] .admin-nav { position: static !important; display: flex; flex-wrap: wrap; gap: .2rem; }
+  body[data-page^="admin-"] .admin-nav .sidebar-title { width: 100%; }
+  body[data-page^="admin-"] .admin-nav a { width: auto; margin: 0; padding: .55rem .65rem; font-size: .84rem; }
+  body[data-page^="admin-"] .admin-nav .btn { width: 100% !important; margin-top: .5rem !important; }
+}

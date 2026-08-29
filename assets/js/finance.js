@@ -1,0 +1,2 @@
+import { supabase } from './supabase.js';
+export async function reportProfitLoss(startDate, endDate) { if (!supabase) return { gross_sales: 125000, discounts: 3500, refunds: 0, net_sales: 121500, cogs: 64000, gross_profit: 57500, other_income: 0, expenses: 18600, net_profit: 38900 }; const { data, error } = await supabase.rpc('profit_loss_report', { p_start_date: startDate, p_end_date: endDate }); if (error) throw error; return data?.[0]; }

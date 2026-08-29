@@ -1,0 +1,12 @@
+if (document.body.dataset.page === 'admin-orders') {
+  const mount = () => {
+    const search = document.querySelector('#orders-search'); if (!search || document.querySelector('#orders-filter-status')) return;
+    const controls = document.createElement('div'); controls.className = 'd-flex flex-wrap gap-2 mt-2';
+    controls.innerHTML = '<select id="orders-filter-status" class="form-select form-select-sm" style="max-width:190px"><option value="">ทุกสถานะออเดอร์</option><option>รอตรวจสอบการชำระเงิน</option><option>ชำระเงินแล้ว</option><option>กำลังเตรียมสินค้า</option><option>กำลังแพ็ก</option><option>จัดส่งแล้ว</option><option>สำเร็จ</option><option>ยกเลิก</option></select><select id="orders-filter-payment" class="form-select form-select-sm" style="max-width:160px"><option value="">ทุกการชำระเงิน</option><option>รอชำระ</option><option>รอตรวจสอบ</option><option>อนุมัติแล้ว</option></select><button id="orders-export" class="btn btn-outline-primary btn-sm"><i class="bi bi-download"></i> ส่งออก CSV</button>';
+    search.closest('.d-flex').after(controls);
+    const filter = () => { const status = document.querySelector('#orders-filter-status').value; const payment = document.querySelector('#orders-filter-payment').value; document.querySelectorAll('#orders-rows tr').forEach(row => { const badges = [...row.querySelectorAll('.badge')].map(node => node.textContent.trim()); row.hidden = Boolean((status && !badges.includes(status)) || (payment && !badges.includes(payment))); }); };
+    controls.querySelectorAll('select').forEach(select => select.addEventListener('change', filter));
+    controls.querySelector('#orders-export').addEventListener('click', () => { const rows = [...document.querySelectorAll('#orders-rows tr')].filter(row => !row.hidden && row.querySelector('strong')).map(row => [...row.querySelectorAll('td')].slice(0, 6).map(cell => `"${cell.innerText.replaceAll('"','""').replaceAll('\n',' ')}"`).join(',')); const blob = new Blob([['เลขออเดอร์,ลูกค้า,วันที่,ยอดชำระ,สถานะคำสั่งซื้อ,ชำระเงิน', ...rows].join('\n')], { type:'text/csv;charset=utf-8' }); const link = Object.assign(document.createElement('a'), { href:URL.createObjectURL(blob), download:`orders-${new Date().toISOString().slice(0,10)}.csv` }); link.click(); URL.revokeObjectURL(link.href); });
+  };
+  new MutationObserver(mount).observe(document.documentElement, { childList:true, subtree:true }); mount();
+}
